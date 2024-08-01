@@ -1,24 +1,22 @@
-# README
+# NextChapter Invoice Management
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Stack
+- Ruby 3.3.3
+- Rails 7.1
+- Postgres 14
+- Docker
 
-Things you may want to cover:
+## Getting Started
+Before starting, make sure you have Ruby and Docker installed
 
-* Ruby version
+### How to start application
+1. Start Postgres using Docker by running `docker-compose up`
+2. Install gems by running `bundle install`
+3. Run any pending migrations by `rails db:migrate`
+4. For the first run, run seed script to create test users `rails db:seed`
+5. Start the application by running `rails server`
+6. Access the application in `http://localhost:3000`
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Test credentials (Only email)
+John Doe (john.doe@example.com)
+Jane Doe (jane.doe@example.com)
