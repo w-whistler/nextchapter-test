@@ -1,0 +1,30 @@
+h1 Invoices
+
+= link_to 'New Invoice', new_invoice_path, class: 'btn btn-primary mb-3'
+
+- if @invoices.any?
+  table.table
+    thead
+      tr
+        th Invoice Number
+        th Client Name
+        th Created At
+        th Next Payment
+        th Actions
+    tbody
+      - @invoices.each do |invoice|
+        tr
+          td= invoice.invoice_number
+          td= invoice.client_name
+          td= invoice.created_at.strftime('%B %d, %Y %I:%M %p')
+          - next_payment_date = invoice.instance_variable_get(:@next_payment_date)
+          - if next_payment_date
+            td #{next_payment_date.strftime('%B %d, %Y')}
+          - else
+            td No upcoming payments
+          td
+            = link_to 'Show', invoice_path(invoice), class: 'btn btn-info btn-sm me-1'
+            = link_to 'Edit', edit_invoice_path(invoice), class: 'btn btn-warning btn-sm me-1'
+            = link_to 'Delete', invoice_path(invoice), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm'
+- else
+  p No invoices found.

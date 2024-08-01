@@ -1,0 +1,23 @@
+h1 Edit Invoice
+
+= form_with model: @invoice, local: true do |form|
+  - if @invoice.errors.any?
+    .alert.alert-danger
+      h4.alert-heading
+        = pluralize(@invoice.errors.count, "error")
+        | prohibited this invoice from being saved:
+      ul
+        - @invoice.errors.full_messages.each do |message|
+          li= message
+
+  .mb-3
+    = form.label :client_name, class: 'form-label'
+    = form.text_field :client_name, class: 'form-control'
+
+  .mb-3
+    = form.label :invoice_number, class: 'form-label'
+    = form.number_field :invoice_number, class: 'form-control', readonly: true
+
+  .d-flex
+    = form.submit 'Update Invoice', class: 'btn btn-primary me-2'
+    = link_to 'Back', invoices_path, class: 'btn btn-secondary'

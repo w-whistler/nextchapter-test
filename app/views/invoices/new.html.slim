@@ -1,0 +1,23 @@
+h1 New Invoice
+
+= form_with url: invoices_path, model: @invoice, local: true do |form|
+  - if @invoice.errors.any?
+    .alert.alert-danger
+      h4 Error
+      ul
+        - @invoice.errors.full_messages.each do |message|
+          li= message
+
+  .mb-3
+    = form.label :client_name, 'Client Name'
+    = form.text_field :client_name, class: 'form-control', required: true
+
+  - if @invoice.invoice_number
+    .mb-3
+      p
+        | Invoice Number:
+        = @invoice.invoice_number
+
+  .d-flex
+    = form.submit 'Create Invoice', class: 'btn btn-primary me-2'
+    = link_to 'Back', invoices_path, class: 'btn btn-secondary'

@@ -1,0 +1,13 @@
+.row.w-100.justify-content-center
+  .col-md-6
+    .card
+      .card-body
+        h1.text-center Login
+        = form_with url: login_path, local: true do |form|
+          - if flash[:error]
+            .alert.alert-danger= flash[:error]
+          .mb-3
+            = form.label :email, class: 'form-label'
+            = form.email_field :email, required: true, class: 'form-control'
+          .d-grid
+            = form.submit 'Login', class: 'btn btn-primary'

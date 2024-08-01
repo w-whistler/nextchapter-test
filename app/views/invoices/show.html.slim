@@ -1,0 +1,69 @@
+h1 Invoice Details
+
+p
+  strong Invoice Number:
+  = @invoice.invoice_number
+p
+  strong Client Name:
+  = @invoice.client_name
+
+h2.mt-5 Invoice Items
+= link_to 'Add Invoice Item', new_invoice_invoice_item_path(@invoice), class: 'btn btn-primary mb-3'
+
+- if @invoice.invoice_items.any?
+  table.table
+    thead
+      tr
+        th Description
+        th Quantity
+        th Amount
+        th Actions
+    tbody
+      - @invoice.invoice_items.each do |item|
+        tr
+          td= item.description
+          td= item.quantity
+          td= item.amount
+          td
+            = link_to 'Edit', edit_invoice_invoice_item_path(@invoice, item), class: 'btn btn-sm btn-secondary me-1'
+            = link_to 'Delete', invoice_invoice_item_path(@invoice, item), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+- else
+  p No invoice items added.
+
+h2.mt-5 Payment Schedule
+- if @invoice.payment_schedule
+  table.table.mb-3
+    thead
+      tr
+        th Payment Frequency
+        th Payment Amount
+        th Start Date
+        th Actions
+    tbody
+      tr
+        td.text-capitalize= @invoice.payment_schedule.payment_frequency
+        td= @invoice.payment_schedule.payment_amount
+        td= @invoice.payment_schedule.start_date
+        td
+          = link_to 'Edit', edit_invoice_payment_schedule_path(@invoice, @invoice.payment_schedule), class: 'btn btn-sm btn-secondary'
+- else
+  .mb-3
+    p No payment schedule configured.
+    = link_to 'Configure Payment Schedule', new_invoice_payment_schedule_path(@invoice), class: 'btn btn-secondary'
+
+h2.mt-5 Payments
+- if @invoice.payment_schedule && @invoice.payment_schedule.payments.any?
+  table.table
+    thead
+      tr
+        th Amount
+        th Payment Date
+    tbody
+      - @invoice.payment_schedule.payments.each do |payment|
+        tr
+          td= number_to_currency(payment.amount)
+          td= payment.payment_date
+- else
+  p No payments scheduled.
+
+= link_to 'Back', invoices_path, class: 'btn btn-secondary'

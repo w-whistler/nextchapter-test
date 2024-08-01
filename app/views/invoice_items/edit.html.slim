@@ -1,0 +1,28 @@
+h1
+  | Edit Invoice Item
+
+= form_with model: [@invoice, @invoice_item], local: true do |form|
+  - if @invoice_item.errors.any?
+    .alert.alert-danger
+      h4.alert-heading
+        = pluralize(@invoice_item.errors.count, "error")
+        | prohibited this invoice item from being saved:
+      ul
+        - @invoice_item.errors.full_messages.each do |message|
+          li= message
+
+  .mb-3
+    = form.label :description, class: 'form-label'
+    = form.text_field :description, class: 'form-control'
+
+  .mb-3
+    = form.label :quantity, class: 'form-label'
+    = form.number_field :quantity, class: 'form-control'
+
+  .mb-3
+    = form.label :amount, class: 'form-label'
+    = form.number_field :amount, class: 'form-control'
+
+  .d-flex
+    = form.submit 'Update Item', class: 'btn btn-primary me-2'
+    = link_to 'Back', @invoice, class: 'btn btn-secondary'

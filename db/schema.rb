@@ -25,12 +25,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_020732) do
   end
 
   create_table "invoices", force: :cascade do |t|
-    t.string "invoice_number", null: false
+    t.integer "invoice_number", null: false
     t.string "client_name", null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["invoice_number"], name: "index_invoices_on_invoice_number", unique: true
     t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 

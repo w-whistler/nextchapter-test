@@ -1,0 +1,25 @@
+h1 Edit Payment Schedule
+
+= form_with(model: [@invoice, @payment_schedule], local: true) do |form|
+  - if @payment_schedule.errors.any?
+    .alert.alert-danger
+      h4.alert-heading
+        = pluralize(@payment_schedule.errors.count, "error")
+        | prohibited this schedule from being saved:
+      ul
+        - @payment_schedule.errors.full_messages.each do |message|
+          li= message
+
+  .mb-3
+    = form.label :payment_frequency, class: 'form-label'
+    = form.select :payment_frequency, [%w[Weekly weekly], %w[Bi-Weekly bi-weekly], %w[Monthly monthly], %w[Bi-Monthly bi-monthly]], { include_blank: true }, class: 'form-control'
+
+  .mb-3
+    = form.label :payment_amount, class: 'form-label'
+    = form.number_field :payment_amount, step: 0.01, class: 'form-control'
+
+  .mb-3
+    = form.label :start_date, class: 'form-label'
+    = form.date_field :start_date, class: 'form-control'
+
+  = form.submit 'Update Payment Schedule', class: 'btn btn-primary'
